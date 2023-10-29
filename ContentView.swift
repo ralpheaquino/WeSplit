@@ -33,23 +33,34 @@ struct ContentView: View {
                     TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                         .keyboardType(.decimalPad)
                         .focused($amountIsFocused)
-                    
+
                     Picker("Number of People", selection: $numberOfPeople){
                         ForEach(2..<100){
                             Text("\($0) people")
                         }
                     }
-                }
+                    
+                } // Challenge 3
                 Section("How Much Do You Want To Tip?") {
                     Picker("Tip Percentage", selection: $tipPercentage){
-                        ForEach(tipPercentages, id: \.self){
+                        //ForEach (tipPercentages, id: \.self){
+                        //Text($0, format: .percent)
+                        ForEach(0..<101){
                             Text($0, format: .percent)
                         }
-                    }.pickerStyle(.segmented)
-                }
-                Section{
+                    }
+                    //.pickerStyle(.segmented)
+                    
+                }//Challenge 1
+                Section("Amount Per Person"){
                     Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 }
+                
+                // Challenge 2
+                Section("Total Amount Check"){
+                    Text("\((checkAmount + (checkAmount * Double(tipPercentage) / 100)), format: .currency(code: Locale.current.currency?.identifier ?? "USD"))")
+                }
+                
             }.navigationTitle("WeSplit")
                 .toolbar{
                     if amountIsFocused{
